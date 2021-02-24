@@ -65,6 +65,7 @@ class BlackJack(GameGUI):
         self.player_wins = 0
         self.dealer_wins = 0
 
+
     def start_game(self):
         """
         Initiates a player and dealer hand, draws both cards, and
@@ -83,6 +84,7 @@ class BlackJack(GameGUI):
         self.dealer_wins_canvas = self._canvas.create_text(900, 150, text = f"Dealer Wins: {self.dealer_wins}")
         self.player_wins_canvas = self._canvas.create_text(900, 100, text = f"Player Wins: {self.player_wins}")
         self.player_stood = False
+        self.bust = False
 
     def player_hit(self):
         """
@@ -96,6 +98,7 @@ class BlackJack(GameGUI):
             self._canvas.delete(self.player_total)
             self.player_total = self._canvas.create_text(100, 220, text = f"Player Hand total: {self.player_hand.total}")
             if self.player_hand.total > 21:
+                self.bust = True
                 self.player_stood = True
                 self._canvas.delete(self.status)
                 self.status = self._canvas.create_text(800, 200, text = "GAME STATUS: PLAYER BUSTED, DEALER WINS")
@@ -109,40 +112,42 @@ class BlackJack(GameGUI):
         Flag is set to True and the dealer begins the turn.
         Points are calculated and the winner is awarded.
         """
-        self.player_stood = True
-        while self.dealer_hand.total < 17:
-            self.dealer_hand.add(self.deck.deal())
-            self.dealer_hand.draw(self._canvas, 100, 125, 1024, 600)
-            self._canvas.delete(self.dealer_total)    
-            self.dealer_total = self._canvas.create_text(100, 30, text = f"Dealer Hand total: {self.dealer_hand.total}")
-        if self.dealer_hand.total > 21:
-            self._canvas.delete(self.status)
-            self.status = self._canvas.create_text(800, 200, text = "GAME STATUS: DEALER BUSTED, PLAYER WINS")
-            self.player_wins += 1
-            self._canvas.delete(self.player_wins_canvas)
-            self.player_wins_canvas = self._canvas.create_text(900, 100, text = f"Player Wins: {self.player_wins}")
-        else:
-            if self.dealer_hand.total > self.player_hand.total:
+        if self.bust == False:
+            self.player_stood = True
+            while self.dealer_hand.total < 17:
+                self.dealer_hand.add(self.deck.deal())
+                self.dealer_hand.draw(self._canvas, 100, 125, 1024, 600)
+                self._canvas.delete(self.dealer_total)    
+                self.dealer_total = self._canvas.create_text(100, 30, text = f"Dealer Hand total: {self.dealer_hand.total}")
+            if self.dealer_hand.total > 21:
                 self._canvas.delete(self.status)
-                self.status = self._canvas.create_text(800, 200, text = "GAME STATUS: Dealer wins. Press r to play again")
-                self.dealer_wins += 1
-                self._canvas.delete(self.dealer_wins_canvas)
-                self.dealer_wins_canvas = self._canvas.create_text(900, 150, text = f"Dealer Wins: {self.dealer_wins}")
-            elif self.dealer_hand.total == self.player_hand.total:
-                self._canvas.delete(self.status)
-                self.status = self._canvas.create_text(800, 200, text = "GAME STATUS: Tie game. Press r to play again")
-            else:
-                self._canvas.delete(self.status)
-                self.status = self._canvas.create_text(800, 200, text = "GAME STATUS: Player wins. Press r to play again")
+                self.status = self._canvas.create_text(800, 200, text = "GAME STATUS: DEALER BUSTED, PLAYER WINS")
                 self.player_wins += 1
                 self._canvas.delete(self.player_wins_canvas)
                 self.player_wins_canvas = self._canvas.create_text(900, 100, text = f"Player Wins: {self.player_wins}")
+            else:
+                if self.dealer_hand.total > self.player_hand.total:
+                    self._canvas.delete(self.status)
+                    self.status = self._canvas.create_text(800, 200, text = "GAME STATUS: Dealer wins. Press r to play again")
+                    self.dealer_wins += 1
+                    self._canvas.delete(self.dealer_wins_canvas)
+                    self.dealer_wins_canvas = self._canvas.create_text(900, 150, text = f"Dealer Wins: {self.dealer_wins}")
+                elif self.dealer_hand.total == self.player_hand.total:
+                    self._canvas.delete(self.status)
+                    self.status = self._canvas.create_text(800, 200, text = "GAME STATUS: Tie game. Press r to play again")
+                else:
+                    self._canvas.delete(self.status)
+                    self.status = self._canvas.create_text(800, 200, text = "GAME STATUS: Player wins. Press r to play again")
+                    self.player_wins += 1
+                    self._canvas.delete(self.player_wins_canvas)
+                    self.player_wins_canvas = self._canvas.create_text(900, 100, text = f"Player Wins: {self.player_wins}")
     
     def reset(self):
         """
         Resets the board but not the score.
         """
         self._canvas.delete(tk.ALL)
+        self.bust = False
         self.player_stood = False
         self.start_game()
 
