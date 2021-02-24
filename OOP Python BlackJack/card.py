@@ -32,7 +32,7 @@ class Card:
         face_cards = ['J', 'K', 'Q', "A", "10"]
         self.card_images = [] 
         # list with every card in a tuple (name, tkinker object)
-        pre_file = r"/Users/Xtina/Documents/GitHub/homework-5-stebbinscp/blackjack/images"
+        pre_file = r"/Users/Xtina/Documents/GitHub/Example-Class-Work/OOP Python BlackJack/images"
 
         for suit in suits:
             for value in range(2, 10):
