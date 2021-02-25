@@ -65,7 +65,6 @@ class BlackJack(GameGUI):
         self.player_wins = 0
         self.dealer_wins = 0
 
-
     def start_game(self):
         """
         Initiates a player and dealer hand, draws both cards, and
