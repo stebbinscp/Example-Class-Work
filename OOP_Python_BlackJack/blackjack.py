@@ -104,7 +104,7 @@ class BlackJack(GameGUI):
                 self.bust = True
                 self.player_stood = True
                 self._canvas.delete(self.status)
-                self.status = self._canvas.create_text(800, 200, text = "GAME STATUS: PLAYER BUSTED, DEALER WINS")
+                self.status = self._canvas.create_text(800, 200, text = "GAME STATUS: PLAYER BUSTED, DEALER WINS, press r to play again")
                 self.dealer_wins += 1
                 self._canvas.delete(self.dealer_wins_canvas)
                 self.dealer_wins_canvas = self._canvas.create_text(900, 150, text = f"Dealer Wins: {self.dealer_wins}")
