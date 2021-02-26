@@ -5,6 +5,7 @@ from Fraction_class import Fraction
 import random
 
 def random_fraction():
+    """Randomly generate a function"""
     numerator = random.randint(1,9)
     denominator = random.randint(1,9)
     frac = Fraction(numerator,denominator)
@@ -12,10 +13,12 @@ def random_fraction():
     return frac
 
 def random_operation():
+    """Randomly generate an operation"""
     operation = random.choice(["add","subtract","multiply","divide"])
     return operation
 
 def fraction_program(operation, frac, frac_2):
+    """Run the fraction question"""
     if operation == "add":
         question = f"What is {frac} + {frac_2}?"
         answer = frac+frac_2
@@ -32,6 +35,7 @@ def fraction_program(operation, frac, frac_2):
     return answer
 
 def main():
+    """Run the fraction question generator until the user decides to stop"""
     print("Welcome to Action Fractions!!")
     count = 0
     total = 0
